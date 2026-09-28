@@ -1,0 +1,11 @@
+services:
+  zoom-telegram-bot:
+    build: .
+    container_name: zoom-telegram-bot
+    restart: unless-stopped
+    env_file: [.env]
+    shm_size: "2gb"
+    volumes:
+      - ./data:/data
+    security_opt:
+      - no-new-privileges:true
