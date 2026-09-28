@@ -72,10 +72,15 @@ class ZoomBrowser:
                     if e.is_displayed() and e.is_enabled():e.click();time.sleep(.3)
             except (StaleElementReferenceException,ElementClickInterceptedException,WebDriverException):continue
     def disable_media_if_visible(self,d):
-        for s in ["//button[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'stop video')]","//button[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'mute')]"]:
+        controls=[
+            ("//button[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'stop video')]",lambda label:"stop video" in label),
+            ("//button[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'mute')]",lambda label:"mute" in label and "unmute" not in label),
+        ]
+        for s,should_click in controls:
             try:
                 for e in d.find_elements(By.XPATH,s):
-                    if e.is_displayed() and e.is_enabled():e.click();time.sleep(.3)
+                    label=(e.get_attribute("aria-label") or "").lower()
+                    if e.is_displayed() and e.is_enabled() and should_click(label):e.click();time.sleep(.3)
             except (StaleElementReferenceException,WebDriverException):continue
     def try_enter_name(self,d):
         for by,s in [(By.ID,"input-for-name"),(By.CSS_SELECTOR,"input[placeholder*='name' i]"),(By.CSS_SELECTOR,"input[aria-label*='name' i]")]:
