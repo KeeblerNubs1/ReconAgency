@@ -3,7 +3,7 @@
 Dockerized Telegram bot using Chromium + Selenium to open the Zoom web client for authorized meetings.
 
 ## Features
-- `/join <zoom-url>`
+- `/join <zoom-url>` or send a Zoom URL directly
 - `/status`
 - `/leave`
 - Chromium/Selenium in Docker
@@ -17,7 +17,7 @@ Dockerized Telegram bot using Chromium + Selenium to open the Zoom web client fo
 1. Copy `.env.example` to `.env`.
 2. Set `TELEGRAM_BOT_TOKEN` and `ALLOWED_TELEGRAM_USER_IDS`.
 3. Run `docker compose up --build -d`.
-4. Use `/join https://us06web.zoom.us/j/...` in Telegram.
+4. Use `/join https://us06web.zoom.us/j/...` or send that Zoom URL by itself in Telegram.
 
 Use only where you are authorized to operate the bot. This project does not include stealth/evasion, CAPTCHA bypass, identity spoofing, or access-control bypassing.
 
